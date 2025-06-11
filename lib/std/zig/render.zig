@@ -1258,8 +1258,10 @@ fn renderWhile(r: *Render, while_node: Ast.full.While, space: Space) Error!void 
     }
 
     try renderToken(r, while_node.ast.while_token, .space); // if/for/while
+    try r.ais.pushIndent(.normal);
     try renderToken(r, while_node.ast.while_token + 1, .none); // lparen
     try renderExpression(r, while_node.ast.cond_expr, .none); // condition
+    r.ais.popIndent();
 
     var last_prefix_token = tree.lastToken(while_node.ast.cond_expr) + 1; // rparen
 
